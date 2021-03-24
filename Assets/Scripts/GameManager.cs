@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        Debug.Log("awake");
+
         if (instance == null)
             instance = this;
         else if (instance != this)
@@ -26,6 +28,9 @@ public class GameManager : MonoBehaviour
         enemies = new List<Enemy>();
         boardScript = GetComponent<BoardManager>();
         InitGame();
+        Debug.Log("Fin awake");
+        print("Text I want to write to Unity console");
+
     }
     void InitGame()
     {
@@ -41,8 +46,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("antes del if");
+        print("Before if");
+
         if (playersTurn || enemiesMoving)
             return;
+        Debug.Log("Despues del if");
+
         StartCoroutine(MoveEnemies());
     }
 
@@ -53,6 +63,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator MoveEnemies()
     {
+        Debug.Log("Entramos");
+
         enemiesMoving = true;
         yield return new WaitForSeconds(turnDelay);
         if (enemies.Count == 0)
@@ -65,7 +77,7 @@ public class GameManager : MonoBehaviour
             enemies[i].MoveEnemy();
             yield return new WaitForSeconds(enemies[i].moveTime);
         }
-
+        Debug.Log("Lo ponemos en true");
         playersTurn = true;
         enemiesMoving = false;
     }
